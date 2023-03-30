@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +12,29 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  void check() async {
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+
+    if(email == "" || password == "") {
+      print("Enter Details");
+    }
+
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: CupertinoButton(
                   color: Colors.blueAccent,
                   onPressed:() {
+                    check();
                   },
                   borderRadius: BorderRadius.circular(25),
                   child: Text("Sign In",

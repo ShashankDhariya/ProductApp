@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,41 @@ class SignUpPage extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+  void check(){
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+    String cpassword = confirmPasswordController.text.trim();
+
+    if(email == "" || password == "" || cpassword == ""){
+      print("Enter your details");
+    }
+    else if(password != cpassword){
+      print("Password don't match");
+    }
+    else {
+      signup(email, password);
+    }
+  }
+
+  void signup(String email, String password) async{
+    UserCredential? credential;
+    try {
+        credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+    );
+    } on FirebaseAuthException catch (e) {
+    if (e.code == 'weak-password') {
+      print('The password provided is too weak.');
+    } else if (e.code == 'email-already-in-use') {
+      print('The account already exists for that email.');
+    }
+    } catch (e) {
+    print(e);
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,13 +219,7 @@ class SignUpPage extends StatelessWidget {
                     child: CupertinoButton(
                       color: Colors.blueAccent,
                       onPressed:() {
-                        Navigator.push(context,
-                            MaterialPageRoute(
-                              builder:(context) {
-                               return CompleteProfilePage();
-                              },
-                            )
-                        );
+                        check();
                       },
                       borderRadius: BorderRadius.circular(25),
                       child: Text("Sign Up"),
@@ -202,7 +232,7 @@ class SignUpPage extends StatelessWidget {
                 },
                 child: Text('Back To Login'),
               ),
-              SizedBox(height: 60,)
+              SizedBox(height: 180,)
             ],
           ),
         ),
