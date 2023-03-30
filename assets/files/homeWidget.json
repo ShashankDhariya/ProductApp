@@ -1,0 +1,27 @@
+{
+    "options": [{
+            "id": 1,
+            "name": "News",
+            "desc": "Stock Updates",
+            "image": "https://images.pexels.com/photos/15139464/pexels-photo-15139464.jpeg?auto=compress&cs=tinysrgb&w=600"
+        },
+        {
+            "id": 2,
+            "name": "Stocks",
+            "desc": "Stock Prices",
+            "image": "https://images.pexels.com/photos/6802049/pexels-photo-6802049.jpeg"
+        },
+        {
+            "id": 3,
+            "name": "Analysis",
+            "desc": "Stock Analysis",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0nxWeU7cOOwdr4zg06LP2vVN1wpe3qTygM-mlqn52lbr18I6vJ33F4f0rd7t68DnAc5M&usqp=CAU"
+        },
+        {
+            "id": 4,
+            "name": "Transaction",
+            "desc": "Stock Transaction",
+            "image": "https://images.pexels.com/photos/6780789/pexels-photo-6780789.jpeg?auto=compress&cs=tinysrgb&w=600"
+        }
+    ]
+}
