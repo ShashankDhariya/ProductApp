@@ -1,12 +1,17 @@
 import 'dart:developer';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_app/models/userModel.dart';
 import 'package:test_app/screens/home.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class CompleteProfilePage extends StatefulWidget {
-  const CompleteProfilePage({super.key});
+  final UserModel userModel;
+  final User firebaseUser;
+  const CompleteProfilePage({super.key, required this.userModel, required this.firebaseUser});
   @override
   State<CompleteProfilePage> createState() => _CompleteProfilePageState();
 }
@@ -14,6 +19,39 @@ class CompleteProfilePage extends StatefulWidget {
 String dropdownValue = "one";
 class _CompleteProfilePageState extends State<CompleteProfilePage> {
   TextEditingController nameController = TextEditingController();
+  String dropdownValue = "Enter your College";
+  String _selectedItem = "";
+
+  List<String> _items = [
+    'Option 1',
+    'Option 2',
+    'Option 3',
+    'Option 4',
+    'Option 5',
+  ];
+
+  void check(){
+    String name = nameController.text.trim();
+
+    if(name == "" || dropdownValue == "Enter your College"){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: "Please enter data".text.make()));
+    }
+    else{
+      widget.userModel.name = name;
+      widget.userModel.college = dropdownValue;
+      FirebaseFirestore.instance.collection("Users").doc(widget.userModel.uid).set(widget.userModel.toMap()).then((value) {
+        print("Data Uploaded");
+        Navigator.push(
+          context, 
+          MaterialPageRoute(
+            builder:(context) {
+              return HomePage();
+            },
+            )
+          );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +113,49 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                 ),
               ),
 
+              SizedBox(height: 30,),
+              Padding(
+                padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(34),
+                  border: Border.all(
+                    color: Colors.green,
+                    width: 1,
+                  ),
+                ),
+                padding: EdgeInsets.all(4),
+                  child: Column(
+                    children: [                
+                      DropdownButton<String>(
+                        icon: Icon(Icons.arrow_drop_down),
+                        iconEnabledColor: Colors.grey,
+                        underline: SizedBox(), // Remove the default underline
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        dropdownColor: Colors.white,
+                        value: dropdownValue,
+                        items: <String>['Graphic Era University', 'University Of Engineering And Management', 'IIT Roorkee', 'Enter your College']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
               SizedBox(height: 30),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
@@ -97,14 +178,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                     child: CupertinoButton(
                       color: Colors.blueAccent,
                       onPressed:() {
-                        Navigator.push(context,
-                            MaterialPageRoute(
-                              builder:(context) {
-                               return HomePage();
-                              },
-                            )
-                        );
-                        log(dropdownValue);
+                        check();
                       },
                       borderRadius: BorderRadius.circular(25),
                       child: Text("Submit"),

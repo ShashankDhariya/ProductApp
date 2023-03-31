@@ -1,12 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_app/models/userModel.dart';
 import 'package:test_app/screens/completeProfile.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   SignUpPage({super.key});
 
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -43,7 +50,27 @@ class SignUpPage extends StatelessWidget {
     } catch (e) {
     print(e);
   }
-}
+
+  if(credential != null){
+    String uid = credential.user!.uid;
+    UserModel newUser = UserModel(
+      uid: uid,
+      email: email,
+      name: "",
+      college: "",
+    );
+    await FirebaseFirestore.instance.collection("Users").doc(uid).set(newUser.toMap()).then((value) {
+      print("New User");
+      Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder:(context) {
+            return CompleteProfilePage(firebaseUser: credential!.user!, userModel: newUser);
+          },
+        ));
+    });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
