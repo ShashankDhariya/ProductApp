@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_app/models/userModel.dart';
-import 'package:test_app/screens/home.dart';
+import 'package:test_app/screens/homePage.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CompleteProfilePage extends StatefulWidget {
@@ -45,7 +45,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
           context, 
           MaterialPageRoute(
             builder:(context) {
-              return HomePage();
+              return HomePage(userModel: widget.userModel, firebaseUser: widget.firebaseUser,);
             },
             )
           );
@@ -141,7 +141,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                             value: value,
                             child: Text(
                               value,
-                              style: TextStyle(fontSize: 14),
+                              style: TextStyle(fontSize: 11),
                             ),
                           );
                         }).toList(),

@@ -22,12 +22,12 @@ class _SignUpPageState extends State<SignUpPage> {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
     String cpassword = confirmPasswordController.text.trim();
-
+    
     if(email == "" || password == "" || cpassword == ""){
-      print("Enter your details");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Enter your details")));
     }
     else if(password != cpassword){
-      print("Password don't match");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Password don't match.")));
     }
     else {
       signup(email, password);
@@ -43,9 +43,10 @@ class _SignUpPageState extends State<SignUpPage> {
     );
     } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
-      print('The password provided is too weak.');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Password is too weak."))); 
+
     } else if (e.code == 'email-already-in-use') {
-      print('The account already exists for that email.');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Account already exists.")));
     }
     } catch (e) {
     print(e);
