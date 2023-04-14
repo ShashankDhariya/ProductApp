@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_app/models/userModel.dart';
+import 'package:test_app/screens/homePage.dart';
 import 'package:test_app/screens/signUp.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,12 +23,36 @@ class _LoginPageState extends State<LoginPage> {
     if(email == "" || password == "") {
       print("Enter Details");
     }
+    else{
+      login(email, password);
+    }
+  }
 
+  void login(String email, String password) async{
+    UserCredential? credential;
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+    if(credential != null){
+      String uid = credential.user!.uid;
+
+      DocumentSnapshot userData = await FirebaseFirestore.instance.collection("Users").doc(uid).get();
+      UserModel userModel = UserModel.fromMap(userData.data() as Map<String, dynamic>);
+
+      Navigator.popUntil(context, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context){
+          return HomePage(userModel: userModel, firebaseUser: credential!.user!);
+        }
+      ),
+    );
+    }
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -34,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 150),
               SizedBox(height: 20),
               Text(
-                'Finance Buddy!',
+                'College Buddy!',
               style: GoogleFonts.pacifico(
                 textStyle: TextStyle(
                   fontSize: 28,

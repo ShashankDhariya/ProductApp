@@ -90,7 +90,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 children: [
                   SizedBox(height: 150),
                   Text(
-                    'Finance Buddy!',
+                    'College Buddy!',
                     style: GoogleFonts.pacifico(
                       textStyle: TextStyle(
                       fontSize: 28,

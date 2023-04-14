@@ -41,6 +41,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
       widget.userModel.college = dropdownValue;
       FirebaseFirestore.instance.collection("Users").doc(widget.userModel.uid).set(widget.userModel.toMap()).then((value) {
         print("Data Uploaded");
+        Navigator.pop(context);
         Navigator.push(
           context, 
           MaterialPageRoute(
