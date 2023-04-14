@@ -1,30 +1,31 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:test_app/models/productModel.dart';
 import 'package:test_app/models/userModel.dart';
 import 'package:test_app/screens/details.dart';
 
-class RentList extends StatefulWidget {
+class BuyList extends StatefulWidget {
   final UserModel usermodel;
   final User firebaseUser;
-  const RentList({super.key, required this.usermodel, required this.firebaseUser});
+  const BuyList({super.key, required this.usermodel, required this.firebaseUser});
 
   @override
-  State<RentList> createState() => _RentListState();
+  State<BuyList> createState() => _BuyListState();
 }
 
-class _RentListState extends State<RentList> {
+class _BuyListState extends State<BuyList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.usermodel.college.toString() + ' Cluster'),
+        backgroundColor: Colors.blueGrey,
+        title: Text('${widget.usermodel.college} Cluster'),
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 5),
           child: StreamBuilder(
             stream: FirebaseFirestore.instance.collection("rent").doc("1").collection(widget.usermodel.college.toString()).snapshots(),
             builder:(context, snapshot) {
@@ -35,7 +36,6 @@ class _RentListState extends State<RentList> {
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      mainAxisSpacing: 10,
                     ), 
                     itemCount: dataSnapshot.docs.length,
                     itemBuilder:(context, index) {
@@ -52,24 +52,31 @@ class _RentListState extends State<RentList> {
                           );
                         },
                         child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          elevation: 8,
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Text(currentProduct.name.toString()),
-                                SizedBox(height: 10,),
-                                CircleAvatar(
-                                  radius: 50,
-                                  backgroundImage: NetworkImage(currentProduct.img.toString()),
+                          elevation: 0.2,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 130,
+                                width: 160,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                    image: NetworkImage(currentProduct.img.toString()),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                                SizedBox(height: 10,),
-                                Title( color: Colors.black,
-                                child: Text("Rs."+currentProduct.price.toString())),
-                              ],
-                            ),
+                              ),
+                              Text(currentProduct.name.toString(),
+                                style: GoogleFonts.montserrat (
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                )
+                              ),
+                              Text("Rs.${currentProduct.price}",
+                                style: GoogleFonts.nunito(
+                                  fontSize: 14,
+                                ),
+                              )
+                            ],
                           )
                         ),
                       );

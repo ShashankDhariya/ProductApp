@@ -113,8 +113,8 @@ class _LoginPageState extends State<LoginPage> {
                       textStyle: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[800],
+                      ),
                     ),
-                  ),
                     filled: true,
                     fillColor: Colors.grey[200],
                     border: OutlineInputBorder(

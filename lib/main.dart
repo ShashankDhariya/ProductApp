@@ -7,7 +7,7 @@ import 'package:test_app/screens/homePage.dart';
 import 'package:test_app/screens/login.dart';
 import 'package:uuid/uuid.dart';
 
-var uuid = Uuid();
+var uuid = const Uuid();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -18,16 +18,16 @@ Future<void> main() async {
       runApp(MyAppLoggedIn(userModel: fetchUserModel, firebaseUser: currentUser));
     }
     else {
-      runApp(MyApp());
+      runApp(const MyApp());
     }
   }
   else{
-    runApp(MyApp());
+    runApp(const MyApp());
   }
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
