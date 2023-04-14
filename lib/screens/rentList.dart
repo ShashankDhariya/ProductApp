@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,16 +7,16 @@ import 'package:test_app/models/productModel.dart';
 import 'package:test_app/models/userModel.dart';
 import 'package:test_app/screens/details.dart';
 
-class BuyList extends StatefulWidget {
+class RentList extends StatefulWidget {
   final UserModel usermodel;
   final User firebaseUser;
-  const BuyList({super.key, required this.usermodel, required this.firebaseUser});
+  const RentList({super.key, required this.usermodel, required this.firebaseUser});
 
   @override
-  State<BuyList> createState() => _BuyListState();
+  State<RentList> createState() => _RentListState();
 }
 
-class _BuyListState extends State<BuyList> {
+class _RentListState extends State<RentList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,7 @@ class _BuyListState extends State<BuyList> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 5),
           child: StreamBuilder(
-            stream: FirebaseFirestore.instance.collection("rent").doc("1").collection(widget.usermodel.college.toString()).snapshots(),
+            stream: FirebaseFirestore.instance.collection("sell").doc("1").collection(widget.usermodel.college.toString()).snapshots(),
             builder:(context, snapshot) {
               if(snapshot.connectionState == ConnectionState.active){
                 if(snapshot.hasData){

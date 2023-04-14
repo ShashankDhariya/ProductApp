@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class ProductDetail {
   String? rentID;
   String? clgID;

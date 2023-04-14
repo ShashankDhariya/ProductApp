@@ -8,6 +8,8 @@ import 'package:test_app/screens/homePage.dart';
 import 'package:test_app/screens/signUp.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -21,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
     String password = passwordController.text.trim();
 
     if(email == "" || password == "") {
-      print("Enter Details");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Enter Details")));
     }
     else{
       login(email, password);
@@ -43,19 +45,19 @@ class _LoginPageState extends State<LoginPage> {
       UserModel userModel = UserModel.fromMap(userData.data() as Map<String, dynamic>);
 
       Navigator.popUntil(context, (route) => route.isFirst);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context){
-          return HomePage(userModel: userModel, firebaseUser: credential!.user!);
-        }
-      ),
-    );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context){
+            return HomePage(userModel: userModel, firebaseUser: credential!.user!);
+          }
+        ),
+      );
     }
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No user found for that email.")));
       } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Wrong password provided for that user.")));
       }

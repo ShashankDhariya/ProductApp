@@ -24,7 +24,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        backgroundColor: Color.fromARGB(255, 106, 127, 228),
         actions: [
           IconButton(
             onPressed:() async {
@@ -39,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                 )
               );
             },
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.exit_to_app),
           )
         ],
       ),
@@ -53,26 +54,27 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 140,),
+            const SizedBox(height: 90,),
             Text("Welcome!",
               style: GoogleFonts.pacifico(
                 fontSize: 25,
+                color: Colors.cyanAccent
               ),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Text(widget.userModel.name.toString(),
-              style: TextStyle(
+              style: GoogleFonts.nunito(
                 fontSize: 30,
               ),
             ),
-            SizedBox(height: 80,),
+            const SizedBox(height: 80,),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.only(left: 35, right: 35),
+              padding: const EdgeInsets.only(left: 35, right: 35),
               child: CupertinoButton(
-                color: Color.fromARGB(255, 106, 127, 228),
-                borderRadius: BorderRadius.circular(20.0),
-                child: Text("RENT"), 
+                color: const Color.fromARGB(255, 106, 127, 228),
+                borderRadius: BorderRadius.circular(40.0),
+                child: const Text("RENT"), 
                 onPressed:() {
                   Navigator.push(
                     context, 
@@ -85,14 +87,14 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.only(left: 35, right: 35),
+              padding: const EdgeInsets.only(left: 35, right: 35),
               child: CupertinoButton(
-                color: Color.fromARGB(255, 106, 127, 228),
+                color: const Color.fromARGB(255, 106, 127, 228),
                 borderRadius: BorderRadius.circular(40.0),
-                child: Text("BUY"), 
+                child: const Text("BUY"), 
                 onPressed:() {
                   Navigator.push(
                     context, 
@@ -105,15 +107,15 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             
             Container(
               width: double.infinity,
-              padding: EdgeInsets.only(left: 35, right: 35),
+              padding: const EdgeInsets.only(left: 35, right: 35),
               child: CupertinoButton(
-                color: Color.fromARGB(255, 106, 127, 228),
+                color: const Color.fromARGB(255, 106, 127, 228),
                 borderRadius: BorderRadius.circular(40.0),
-                child: Text("SELL"), 
+                child: const Text("SELL"), 
                 onPressed:() {
                   Navigator.push(
                     context, 
@@ -126,14 +128,14 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20),
             Container(
-              padding: EdgeInsets.only(left: 35, right: 35),
+              padding: const EdgeInsets.only(left: 35, right: 35),
               width: double.infinity,
               child: CupertinoButton(
-                color: Color.fromARGB(255, 106, 127, 228),
+                color: const Color.fromARGB(255, 106, 127, 228),
                 borderRadius: BorderRadius.circular(40.0),
-                child: Text("GIVE ON RENT"), 
+                child: const Text("GIVE ON RENT"), 
                 onPressed:() {
                   Navigator.push(
                     context, 
@@ -151,22 +153,22 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: ButtonBar(
         alignment: MainAxisAlignment.spaceBetween,
-        buttonPadding: EdgeInsets.only(right: 20, left: 20),
+        buttonPadding: const EdgeInsets.only(right: 20, left: 20),
         children: [
           InkWell(
-            child: Icon(Icons.home),
+            child: const Icon(Icons.home),
             onTap:() {
             },
           ),
 
           InkWell(
-            child: Icon(Icons.shopping_bag),
+            child: const Icon(Icons.shopping_bag),
             onTap:() {
             },
           ),
 
           InkWell(
-            child: Icon(Icons.person),
+            child: const Icon(Icons.person),
             onTap:() {
               Navigator.push(
                 context, 
