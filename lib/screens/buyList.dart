@@ -25,16 +25,15 @@ class _BuyListState extends State<BuyList> {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           child: StreamBuilder(
             stream: FirebaseFirestore.instance.collection("sell").doc("1").collection(widget.usermodel.college.toString()).snapshots(),
             builder:(context, snapshot) {
               if(snapshot.connectionState == ConnectionState.active){
                 if(snapshot.hasData){
                   QuerySnapshot dataSnapshot = snapshot.data as QuerySnapshot;
-
                   return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                     ), 
                     itemCount: dataSnapshot.docs.length,
@@ -52,7 +51,7 @@ class _BuyListState extends State<BuyList> {
                           );
                         },
                         child: Card(
-                          elevation: 0.2,
+                          elevation: 1,
                           child: Column(
                             children: [
                               Container(

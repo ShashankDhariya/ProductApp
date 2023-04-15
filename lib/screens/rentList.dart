@@ -28,7 +28,7 @@ class _RentListState extends State<RentList> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 5),
           child: StreamBuilder(
-            stream: FirebaseFirestore.instance.collection("sell").doc("1").collection(widget.usermodel.college.toString()).snapshots(),
+            stream: FirebaseFirestore.instance.collection("rent").doc("1").collection(widget.usermodel.college.toString()).snapshots(),
             builder:(context, snapshot) {
               if(snapshot.connectionState == ConnectionState.active){
                 if(snapshot.hasData){
